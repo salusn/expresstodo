@@ -5,10 +5,21 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var url = 'mongodb://localhost:27017/todo';
 var mongoose = require('mongoose');
 var Todo = require('./models/todo');
 mongoose.Promise = Promise;
+
+// mongodb connection
+mongoose.connect("mongodb://localhost:27017/todo", {
+  useMongoClient: true,
+  promiseLibrary: global.Promise
+});
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+  console.log(`Connected to Mongo at: ${new Date()}`)
+});
 
 
 var index = require('./routes/index');
