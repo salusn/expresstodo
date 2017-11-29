@@ -10,23 +10,23 @@ var Todo = require('./models/todo');
 mongoose.Promise = Promise;
 
 // mongodb connection
-mongoose.connect("mongodb://localhost:27017/todo", {
-  useMongoClient: true,
-  promiseLibrary: global.Promise
-});
+// mongoose.connect("mongodb://localhost:27017/todo", {
+//   useMongoClient: true,
+//   promiseLibrary: global.Promise
+// });
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-  console.log(`Connected to Mongo at: ${new Date()}`)
-});
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', () => {
+//   console.log(`Connected to Mongo at: ${new Date()}`)
+// });
 
 
 var index = require('./routes/index');
-var users = require('./routes/users');
-var login = require('./routes/login');
-var todo = require('./routes/todo');
-var todolist = require('./routes/todolist');
+// var users = require('./routes/users');
+// var login = require('./routes/login');
+ var todo = require('./routes/todo');
+// var todolist = require('./routes/todolist');
 
 var app = express();
 
@@ -42,13 +42,34 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
+var router = express.Router();
 
-app.get('/login', login);
-app.post('/login', login);
-app.get('/todo', todo);
-app.get('/todolist', todolist);
+
+// router.route('/todo')
+//     console.log("hhh")
+//     // create  (accessed at POST http://localhost:8080/todo)
+//     .post(function(req, res) {
+    
+//         var todo = new Todo({
+//         	name : req.body.taskname,        
+//         	}); 
+
+//         todo.save(function(err) {
+//             if (err)
+//                 res.send(err);
+
+//             res.json({ message: 'Todo created!' });
+//         });
+
+//     })
+
+app.use('/', index);
+//app.use('/todo', todo);
+
+// app.get('/login', login);
+// app.post('/login', login);
+ app.get('/todo', todo);
+// app.get('/todolist', todolist);
 app.post('/todo', todo);
 
 // catch 404 and forward to error handler

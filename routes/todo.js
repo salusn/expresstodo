@@ -1,22 +1,34 @@
 // jshint ignore: start
 var express = require('express');
 var router = express.Router();
-var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://localhost:27017/todo';
+//var Todo = require('../models/todo');
+var mongoose = require('mongoose');
+var Todo = require('../models/todo');
+mongoose.Promise = Promise;
 
-router.get('/todo', function(req, res, next) { 
+mongoose.connect("mongodb://localhost:27017/todo", {
+  useMongoClient: true,
+  promiseLibrary: global.Promise
+});
+
+var db = mongoose.connection;
+
+
+
+router.get('/todo', function(req, res, next) {
   res.render('todo', { title: 'Add New Task Here' });
 });
 
 router.post('/todo', function(req, res) {
-	MongoClient.connect(url, function(err, db) {
-		var collection = db.collection('todotasks');
-		var todotask = req.body.todotask;		
-		collection.insert({todotask: todotask}, function(err, result) {
-			res.redirect('todolist');		    	
-		})
-	});	 
-	
+
+	var todo = new Todo({
+        	taskname : req.body.taskname,
+        	});
+console.log(todo)
+        todo.save(function(err) {
+        	console.log(err)
+            res.redirect('/')
+        });
 });
 
 module.exports = router;
