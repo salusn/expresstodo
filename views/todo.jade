@@ -1,3 +1,7 @@
 // jshint ignore: start
 block content
-    h1= "title"
+    h1= title
+    form(name="add-estimation", method="post")
+        div.input
+            input(type="text", name="todotask")
+            input(type="submit", value="add")
