@@ -23,11 +23,12 @@ router.post('/todo', function(req, res) {
 
 	var todo = new Todo({
         	taskname : req.body.taskname,
+        	complete : 0,
+        	delete : 0.
         	});
-console.log(todo)
         todo.save(function(err) {
         	console.log(err)
-            res.redirect('/')
+            res.redirect('/todolist')
         });
 });
 

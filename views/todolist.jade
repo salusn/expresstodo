@@ -1,8 +1,15 @@
-// jshint ignore: start
-if tasks
-  ul
-    for task in tasks
-        
-      li!= task.todotask
-block content
-    h1= "title"
+//jshint ignore: start
+
+<h3>Tasks are listed here.You can <a href='/todo'>Add More</a> tasks from here</h3> 
+table
+  thead
+    tr
+      th Taskname
+      th Complete
+      th Delete
+  tbody
+    each task in tasks
+      tr
+        td= task.taskname
+        td #[a(href="edit/#{task._id}") Complete]
+        td #[a(href="delete/#{task._id}") Delete]
