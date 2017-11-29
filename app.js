@@ -1,14 +1,21 @@
+// jshint ignore: start
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var url = 'mongodb://localhost:27017/todo';
+var mongoose = require('mongoose');
+var Todo = require('./models/todo');
+mongoose.Promise = Promise;
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
 var todo = require('./routes/todo');
+var todolist = require('./routes/todolist');
 
 var app = express();
 
@@ -30,6 +37,7 @@ app.use('/users', users);
 app.get('/login', login);
 app.post('/login', login);
 app.get('/todo', todo);
+app.get('/todolist', todolist);
 app.post('/todo', todo);
 
 // catch 404 and forward to error handler
