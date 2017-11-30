@@ -5,12 +5,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var flash = require('express-flash');
+var session = require('express-session');
+var flash = require('connect-flash');
 var mongoose = require('mongoose');
 var Todo = require('./models/todo');
 mongoose.Promise = Promise;
 
 var index = require('./routes/index');
-// var users = require('./routes/users');
 var login = require('./routes/login');
 var todo = require('./routes/todo');
 var todolist = require('./routes/todolist');
@@ -30,6 +32,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+  cookieName: 'session',
+  secret: 'random_string_goes_here',
+  resave: false,
+  saveUninitialized: true,
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+  secure: true,
+}));
+app.use(flash()); 
 
 var router = express.Router();
 

@@ -1,7 +1,9 @@
 // jshint ignore: start
 var express = require('express');
 var router = express.Router();
-//var Todo = require('../models/todo');
+const Joi = require('joi');
+var flash = require('express-flash');
+var session = require('express-session');
 var mongoose = require('mongoose');
 var Todo = require('../models/todo');
 mongoose.Promise = Promise;
@@ -21,7 +23,19 @@ router.get('/todo', function(req, res, next) {
 
 router.post('/todo', function(req, res) {
 
-	var todo = new Todo({
+  const schema = Joi.object().keys({
+
+      taskname: Joi.string().required(),  
+
+  });
+
+  const result = Joi.validate({ taskname: req.body.taskname}, schema);
+
+  if (result.error) {
+
+      res.render('todo', { errors: result.error.details });
+    } else { 
+	  var todo = new Todo({
         	taskname : req.body.taskname,
         	complete : 0,
         	delete : 0.
@@ -30,6 +44,7 @@ router.post('/todo', function(req, res) {
         	console.log(err)
             res.redirect('/todolist')
         });
+      }
 });
 
 module.exports = router;

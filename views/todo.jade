@@ -1,4 +1,9 @@
 // jshint ignore: start
+if errors
+  ul
+    for error in errors
+        
+      li!= error.message
 block content
     <h2>Add New Task Here or See the List of task <a href='/todolist'>Here</a></h2> 
     form(name="add-estimation", method="post")
