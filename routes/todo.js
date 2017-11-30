@@ -16,7 +16,7 @@ var db = mongoose.connection;
 
 
 router.get('/todo', function(req, res, next) {
-  res.render('todo', { title: 'Add New Task Here' });
+  res.render('todo');
 });
 
 router.post('/todo', function(req, res) {

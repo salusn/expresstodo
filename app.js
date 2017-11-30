@@ -11,7 +11,7 @@ mongoose.Promise = Promise;
 
 var index = require('./routes/index');
 // var users = require('./routes/users');
-// var login = require('./routes/login');
+var login = require('./routes/login');
 var todo = require('./routes/todo');
 var todolist = require('./routes/todolist');
 var todocomplete = require('./routes/todocomplete');
@@ -34,7 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 var router = express.Router();
 
 app.use('/', index);
-
+app.get('/login', login);
+app.post('/login', login);
 app.get('/todo', todo);
 app.get('/todolist', todolist);
 app.post('/todo', todo);
