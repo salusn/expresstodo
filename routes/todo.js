@@ -15,36 +15,30 @@ mongoose.connect("mongodb://localhost:27017/todo", {
 
 var db = mongoose.connection;
 
-
-
 router.get('/todo', function(req, res, next) {
   res.render('todo');
 });
 
 router.post('/todo', function(req, res) {
-
   const schema = Joi.object().keys({
-
       taskname: Joi.string().required(),  
-
   });
 
   const result = Joi.validate({ taskname: req.body.taskname}, schema);
 
   if (result.error) {
-
-      res.render('todo', { errors: result.error.details });
-    } else { 
+    res.render('todo', { errors: result.error.details });
+  }else{ 
 	  var todo = new Todo({
         	taskname : req.body.taskname,
         	complete : 0,
         	delete : 0.
-        	});
+        });
         todo.save(function(err) {
         	console.log(err)
             res.redirect('/todolist')
         });
-      }
+    }
 });
 
 module.exports = router;
