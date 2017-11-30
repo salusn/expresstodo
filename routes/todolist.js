@@ -14,7 +14,6 @@ var db = mongoose.connection;
 
 router.get('/todolist', function(req, res, next) {
 	Todo.find(function(err, todos) {
-		console.log(todos)
             res.render('todolist', { tasks: todos });
         });
 	

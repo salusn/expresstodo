@@ -1,7 +1,6 @@
 // jshint ignore: start
 var express = require('express');
 var router = express.Router();
-//var Todo = require('../models/todo');
 var mongoose = require('mongoose');
 var Todo = require('../models/todo');
 mongoose.Promise = Promise;
@@ -11,10 +10,22 @@ mongoose.connect("mongodb://localhost:27017/todo", {
   promiseLibrary: global.Promise
 });
 
+var db = mongoose.connection;
+
 router.get('/todocomplete/:id', function(req, res, next) {
-	console.log("heel")
-  //res.render('todocomplete');
+
+    Todo.findById(req.params.id, (err, todo) => {  
+    	console.log(todo)
+    
+        todo.complete = 1;
+
+        todo.save((err, todo) => {
+            if (err) {
+                console.log(err)
+            }
+        });
+        res.redirect('/todolist')
+    });
 });
 
-var db = mongoose.connection;
 module.exports = router;

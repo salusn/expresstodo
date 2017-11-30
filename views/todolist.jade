@@ -11,5 +11,8 @@ table
     each task in tasks
       tr
         td= task.taskname
-        td #[a(href="todocomplete/#{task._id}") Complete]
+        if(task.complete == 0)
+         td #[a(href="todocomplete/#{task._id}") Complete]
+        else
+          td #[a(href="todocomplete/#{task._id}") Completed]
         td #[a(href="tododelete/#{task._id}") Delete]
