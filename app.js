@@ -15,6 +15,7 @@ var index = require('./routes/index');
 var todo = require('./routes/todo');
 var todolist = require('./routes/todolist');
 var todocomplete = require('./routes/todocomplete');
+var tododelete = require('./routes/tododelete');
 
 var app = express();
 
@@ -38,8 +39,7 @@ app.get('/todo', todo);
 app.get('/todolist', todolist);
 app.post('/todo', todo);
 app.get('/todocomplete/:id', todocomplete);
-
-
+app.get('/tododelete/:id', tododelete);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

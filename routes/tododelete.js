@@ -12,10 +12,12 @@ mongoose.connect("mongodb://localhost:27017/todo", {
 
 var db = mongoose.connection;
 
-router.get('/todocomplete/:id', function(req, res, next) {
-	
-    Todo.findById(req.params.id, (err, todo) => {  
-        todo.complete = 1;
+router.get('/tododelete/:id', function(req, res, next) {
+    
+        Todo.findById(req.params.id, (err, todo) => {  
+        console.log("del")
+        console.log(todo)
+        todo.delete = 1;
 
         todo.save((err, todo) => {
             if (err) {

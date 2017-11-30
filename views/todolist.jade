@@ -14,5 +14,8 @@ table
         if(task.complete == 0)
          td #[a(href="todocomplete/#{task._id}") Complete]
         else
-          td #[a(href="todocomplete/#{task._id}") Completed]
-        td #[a(href="tododelete/#{task._id}") Delete]
+          td #[a(href="#") Completed]
+        if(task.delete == 0)
+         td #[a(href="tododelete/#{task._id}") Delete]
+        else
+          td #[a(href="#") Deleted]
